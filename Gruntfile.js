@@ -77,11 +77,10 @@ module.exports = (grunt) => {
             );
           }
         },
-        // scratchPluginMinPath is used twice on purpose, all outputs will be minified for premium plugins
         files: {
           'dist/maths-equation-editor/plugin.js': [
             'src/text/license-header.js',
-            scratchPluginMinPath
+            scratchPluginPath
           ],
           'dist/maths-equation-editor/plugin.min.js': [
             'src/text/license-header.js',
@@ -96,7 +95,32 @@ module.exports = (grunt) => {
         files: [
           { src: [ 'CHANGELOG.txt', 'LICENSE.txt' ], dest: 'dist/maths-equation-editor', expand: true }
         ]
-      }
+      },
+      I18n: {
+        files: [
+          { src: [ 'langs/*' ], dest: 'dist/maths-equation-editor', expand: true }
+        ]
+      },
+      icons: {
+        files: [
+          { src: [ 'icons/*' ], dest: 'dist/maths-equation-editor', expand: true }
+        ]
+      },
+      mee: {
+        files: [
+          { cwd: 'mee', src: [ '**/*' ], dest: 'dist/maths-equation-editor/mee', expand: true }
+        ]
+      },
+      html: {
+        files: [
+          { cwd: 'src/main/html', src: [ '*' ], dest: 'dist/maths-equation-editor', expand: true }
+        ]
+      },
+      js: {
+        files: [
+          { cwd: 'src/main/js', src: [ '*' ], dest: 'dist/maths-equation-editor', expand: true }
+        ]
+      },
     },
 
     webpack: {
