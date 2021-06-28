@@ -31,12 +31,6 @@ $(function () {
 
     newinput.attr('latex', latex);
 
-    if (latex) {
-      document.getElementById("insert").style.display = "none";
-    } else {
-      document.getElementById("update").style.display = "none";
-    }
-
     setTimeout("MEE.Base.Render();", 1);
 });
 

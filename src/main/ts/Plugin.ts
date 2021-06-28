@@ -56,12 +56,28 @@ const setup = (editor: Editor, url: string) => {
       url: url + '/dialog.html',
       buttons: [ // A list of footer buttons
         {
+          type: 'custom',
+          text: 'insert',
+          name: 'insert',
+          disabled: currentMee ? true : false
+        },
+        {
+          type: 'custom',
+          text: 'update',
+          name: 'update',
+          disabled: currentMee ? false : true
+        },
+        {
           type: 'cancel',
           text: 'cancel',
           name: 'cancel',
           primary: true
         }
       ],
+      onAction: function (dialogApi) {
+        window[3].insertMME();
+        dialogApi.close();
+      },
     });
   });
 
@@ -74,12 +90,28 @@ const setup = (editor: Editor, url: string) => {
         url: url + '/dialog.html',
         buttons: [ // A list of footer buttons
           {
+            type: 'custom',
+            text: 'insert',
+            name: 'insert',
+            disabled: currentMee ? true : false
+          },
+          {
+            type: 'custom',
+            text: 'update',
+            name: 'update',
+            disabled: currentMee ? false : true
+          },
+          {
             type: 'cancel',
             text: 'cancel',
             name: 'cancel',
             primary: true
           }
         ],
+        onAction: function (dialogApi) {
+          window[3].insertMME();
+          dialogApi.close();
+        },
       });
     },
     onSetup: function (buttonApi) {
