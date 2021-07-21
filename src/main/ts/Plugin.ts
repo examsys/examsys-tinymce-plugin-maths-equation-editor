@@ -51,9 +51,18 @@ const setup = (editor: Editor, url: string) => {
   // Register commands
   editor.addCommand('mceMEE', function () {
     editor.selection.select(editor.plugins['maths-equation-editor'].getCurrentMee());
-    tinymce.activeEditor.windowManager.openUrl({
+    tinymce.activeEditor.windowManager.open({
       title: 'mee',
-      url: url + '/dialog.html',
+      body: {
+        type: 'panel',
+        items: [
+          {
+            type: 'htmlpanel',
+            html: '<iframe id="meedialog" name="meedialog" src="' + url + '/dialog.html" frameborder="0"></iframe>',
+          }
+        ]
+      },
+      size: 'large',
       buttons: [ // A list of footer buttons
         {
           type: 'custom',
@@ -75,19 +84,32 @@ const setup = (editor: Editor, url: string) => {
         }
       ],
       onAction: function (dialogApi) {
-        window[3].insertMME();
+        window['meedialog'].insertMME();
         dialogApi.close();
       },
     });
+    // Resize.
+    $('.tox-form__group').css('height', '100%');
+    $('#meedialog').css('height', '100%');
+    $('#meedialog').css('width', '100%');
   });
 
   editor.ui.registry.addButton('maths-equation-editor', {
     icon: 'mee',
     tooltip: 'mee',
     onAction: () => {
-      tinymce.activeEditor.windowManager.openUrl({
+      tinymce.activeEditor.windowManager.open({
         title: 'mee',
-        url: url + '/dialog.html',
+        body: {
+          type: 'panel',
+          items: [
+            {
+              type: 'htmlpanel',
+              html: '<iframe id="meedialog" name="meedialog" src="' + url + '/dialog.html" frameborder="0" width="100%" height="100%"></iframe>',
+            }
+          ]
+        },
+        size: 'large',
         buttons: [ // A list of footer buttons
           {
             type: 'custom',
@@ -109,10 +131,14 @@ const setup = (editor: Editor, url: string) => {
           }
         ],
         onAction: function (dialogApi) {
-          window[3].insertMME();
+          window['meedialog'].insertMME();
           dialogApi.close();
         },
       });
+      // Resize.
+      $('.tox-form__group').css('height', '100%');
+      $('#meedialog').css('height', '100%');
+      $('#meedialog').css('width', '100%');
     },
     onSetup: function (buttonApi) {
       const editorEventCallback = function (eventApi) {
