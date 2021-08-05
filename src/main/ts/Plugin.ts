@@ -253,7 +253,10 @@ const get$1 = function (editor) {
 
 export default (): void => {
   // Load the required translation files
-  tinymce.PluginManager.requireLangPack('maths-equation-editor', 'en');
+  const supportedLangs = ['en', 'cs', 'pl', 'sk'];
+  supportedLangs.forEach(function (item) {
+    tinymce.PluginManager.requireLangPack('maths-equation-editor', item)
+  });
   // Register the custom plugin
   tinymce.PluginManager.add('maths-equation-editor', setup);
 };
