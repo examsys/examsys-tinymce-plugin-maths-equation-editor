@@ -14,7 +14,7 @@
   "author": "University of Nottingham",
   "devDependencies": {
     "@ephox/agar": "latest",
-    "@ephox/bedrock-server": "latest",
+    "@ephox/bedrock-server": "^12.3.2",
     "@ephox/mcagar": "latest",
     "@ephox/swag": "latest",
     "@types/mocha": "^8.0.0",
