@@ -37,7 +37,7 @@ $toconvert['log'] = 'MathJax_Main-Regular';
 
 foreach ($toconvert as $char => $font) {
     cli_utils::prompt('Converting ' . $char);
-    
+
     $im = imagecreatetruecolor(1000, 1000);
     $white = imagecolorallocate($im, 255, 255, 255);
     imagefilledrectangle($im, 0, 0, 1000, 1000, $white);
