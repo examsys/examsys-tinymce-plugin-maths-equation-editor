@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable
 /**
  * jsmin.php - PHP implementation of Douglas Crockford's JSMin.
  *
