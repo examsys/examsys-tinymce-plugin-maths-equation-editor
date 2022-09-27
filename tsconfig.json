@@ -10,7 +10,7 @@
     "sourceMap": true,
     "outDir": "lib",
     "baseUrl": ".",
-    "types": ["mocha"]
+    "types": ["mocha", "jquery"]
   },
   "include": [
     "src/demo/ts",
