@@ -144,7 +144,7 @@ const setup = (editor: Editor, url: string) => {
     onSetup: function (buttonApi) {
       const editorEventCallback = function (eventApi) {
         buttonApi.setDisabled(eventApi.element.nodeName.toLowerCase() === 'maths-equation-editor');
-        const mee = findMee(eventApi.element.childNodes[0]);
+        const mee = findMee(eventApi.element);
         if (mee) {
           currentMee = mee;
           $(mee).css('border', '1px solid blue');
@@ -231,10 +231,16 @@ const setup = (editor: Editor, url: string) => {
   }
 
   function findMee(element) {
-    if ($(element).hasClass('mee_iframe'))
-      return element;
-    if (!element.parentNode)
+    if (!element) {
+      // The element is likely undefined.
       return null;
+    }
+    if ($(element).hasClass('mee_iframe')) {
+      return element;
+    }
+    if (!element.parentNode) {
+      return null;
+    }
     return findMee(element.parentNode);
   }
 
