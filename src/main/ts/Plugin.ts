@@ -89,8 +89,9 @@ const setup = (editor: Editor, url: string) => {
     });
     // Resize.
     $('.tox-form__group').css('height', '100%');
-    $('#meedialog').css('height', '100%');
-    $('#meedialog').css('width', '100%');
+    const dialog = $('#meedialog');
+    dialog.css('height', '100%');
+    dialog.css('width', '100%');
   });
 
   editor.ui.registry.addButton('maths-equation-editor', {
@@ -136,8 +137,9 @@ const setup = (editor: Editor, url: string) => {
       });
       // Resize.
       $('.tox-form__group').css('height', '100%');
-      $('#meedialog').css('height', '100%');
-      $('#meedialog').css('width', '100%');
+      const dialog = $('#meedialog');
+      dialog.css('height', '100%');
+      dialog.css('width', '100%');
     },
     onSetup: function (buttonApi) {
       const editorEventCallback = function (eventApi) {
