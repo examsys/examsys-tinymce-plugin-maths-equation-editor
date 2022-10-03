@@ -7,6 +7,7 @@ module.exports = (grunt) => {
   const packageData = grunt.file.readJSON('package.json');
   const BUILD_VERSION = packageData.version + '-' + (process.env.BUILD_NUMBER ? process.env.BUILD_NUMBER : '0');
   const libPluginPath = 'lib/main/ts/Main.js';
+  const scratchPath = 'scratch/compiled';
   const scratchPluginPath = 'scratch/compiled/plugin.js';
   const scratchPluginMinPath = 'scratch/compiled/plugin.min.js';
   const tsDemoSourceFile = path.resolve('src/demo/ts/Demo.ts');
@@ -54,6 +55,10 @@ module.exports = (grunt) => {
     },
 
     uglify: {
+      options: {
+        mangle: false,
+        sourceMap: true
+      },
       plugin: {
         files: [
           {
@@ -61,32 +66,6 @@ module.exports = (grunt) => {
             dest: scratchPluginMinPath
           }
         ]
-      }
-    },
-
-    concat: {
-      license: {
-        options: {
-          process: (src) => {
-            const buildSuffix = process.env.BUILD_NUMBER
-              ? '-' + process.env.BUILD_NUMBER
-              : '';
-            return src.replace(
-              /@BUILD_NUMBER@/g,
-              packageData.version + buildSuffix
-            );
-          }
-        },
-        files: {
-          'dist/maths-equation-editor/plugin.js': [
-            'src/text/license-header.js',
-            scratchPluginPath
-          ],
-          'dist/maths-equation-editor/plugin.min.js': [
-            'src/text/license-header.js',
-            scratchPluginMinPath
-          ]
-        }
       }
     },
 
@@ -118,7 +97,8 @@ module.exports = (grunt) => {
       },
       js: {
         files: [
-          { cwd: 'src/main/js', src: [ '*' ], dest: 'dist/maths-equation-editor', expand: true }
+          { cwd: 'src/main/js', src: [ '*' ], dest: 'dist/maths-equation-editor', expand: true },
+          { cwd: scratchPath, src: [ '*' ], dest: 'dist/maths-equation-editor', expand: true }
         ]
       },
     },
@@ -181,7 +161,6 @@ module.exports = (grunt) => {
     'shell',
     'rollup',
     'uglify',
-    'concat',
     'copy',
     'version'
   ]);
