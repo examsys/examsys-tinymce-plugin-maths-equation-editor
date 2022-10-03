@@ -52,7 +52,7 @@ function insertMME() {
   const url = document.URL.substring(0, document.URL.lastIndexOf("/"));
   const src = url+ "/frame.html?" + datatxt;
 
-  const style = 'display:block';
+  let style = 'display:block';
   if (data.inline) {
     style = 'display:inline';
   }
