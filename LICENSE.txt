@@ -1,4 +1,4 @@
-Copyright (c) 2021 University of Nottingham <''> (http://rogo-oss.nottingham.ac.uk/)
+Copyright (c) 2021 University of Nottingham (http://examsys-oss.nottingham.ac.uk/)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
