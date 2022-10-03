@@ -196,9 +196,9 @@ const setup = (editor: Editor, url: string) => {
     doc.html(evt.content);
     $(doc).find('.mee_iframe').each(function () {
       const src = $(this).attr('src');
-      let rawdata = src.substr(src.indexOf('?'));
-      rawdata = rawdata.substr(1);
-      const data = $.parseJSON(rawdata);
+      let rawdata = src.substring(src.indexOf('?'));
+      rawdata = rawdata.substring(1);
+      const data = JSON.parse(rawdata);
       data.latex = unencodeQuotes(data.latex);
 
       $(this).removeClass('mee_iframe');

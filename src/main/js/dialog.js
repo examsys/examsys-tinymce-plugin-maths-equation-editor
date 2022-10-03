@@ -8,9 +8,9 @@ $(function () {
         selelem = elem;
         var url = elem.src;
 
-        var data = url.substr(url.indexOf('?'));
-        var data = unescape(data.substr(1));
-        var data = $.parseJSON(data);
+        var data = url.substring(url.indexOf('?'));
+        var data = unescape(data.substring(1));
+        var data = JSON.parse(data);
 
         latex = unencodeQuotes(data.latex);
         inline = data.inline;

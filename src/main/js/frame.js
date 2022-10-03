@@ -1,8 +1,8 @@
 $(function () {
   var no_auto_mee = 1;
   var data = window.location.search;
-  var data = unescape(data.substr(1));
-  var data = $.parseJSON(data);
+  var data = unescape(data.substring(1));
+  var data = JSON.parse(data);
   data.latex = unencodeQuotes(data.latex);
   $('#equation').css('font-size', data.fontsize);
 
