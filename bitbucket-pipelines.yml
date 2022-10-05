@@ -1,0 +1,12 @@
+image: node:16.17.0
+
+pipelines:
+  default:
+    - parallel:
+        - step:
+            name: Build
+            caches:
+              - node
+            script:
+              - npm install
+              - yarn build
