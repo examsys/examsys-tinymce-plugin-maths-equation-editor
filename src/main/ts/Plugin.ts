@@ -1,5 +1,4 @@
 import { Editor, TinyMCE } from 'tinymce';
-import {config} from "@ephox/bedrock-server/lib/main/ts/bedrock/cli/ClOptions";
 
 declare const tinymce: TinyMCE;
 
@@ -90,8 +89,9 @@ const setup = (editor: Editor, url: string) => {
     });
     // Resize.
     $('.tox-form__group').css('height', '100%');
-    $('#meedialog').css('height', '100%');
-    $('#meedialog').css('width', '100%');
+    const dialog = $('#meedialog');
+    dialog.css('height', '100%');
+    dialog.css('width', '100%');
   });
 
   editor.ui.registry.addButton('maths-equation-editor', {
@@ -137,13 +137,14 @@ const setup = (editor: Editor, url: string) => {
       });
       // Resize.
       $('.tox-form__group').css('height', '100%');
-      $('#meedialog').css('height', '100%');
-      $('#meedialog').css('width', '100%');
+      const dialog = $('#meedialog');
+      dialog.css('height', '100%');
+      dialog.css('width', '100%');
     },
     onSetup: function (buttonApi) {
       const editorEventCallback = function (eventApi) {
         buttonApi.setDisabled(eventApi.element.nodeName.toLowerCase() === 'maths-equation-editor');
-        const mee = findMee(eventApi.element.childNodes[0]);
+        const mee = findMee(eventApi.element);
         if (mee) {
           currentMee = mee;
           $(mee).css('border', '1px solid blue');
@@ -155,26 +156,29 @@ const setup = (editor: Editor, url: string) => {
       editor.on('NodeChange', editorEventCallback);
 
       /* onSetup should always return the unbind handlers */
-      return function (buttonApi) {
+      return function () {
         editor.off('NodeChange', editorEventCallback);
       };
     },
   });
 
-  editor.on('SetContent', function (evt) {
+  editor.on('SetContent', function () {
     const body = editor.getBody();
     const elems = $(body).find('.mee');
     for (let i = 0 ; i < elems.length; i++){
       const elem = elems[i];
-      const data = {};
       const eltype = elem.tagName;
+      let inline;
       if (eltype == "DIV"){
-        data.inline = false;
+        inline = false;
       } else {
-        data.inline = true;
+        inline = true;
       }
-      data.latex = encodeQuotes($(elem).html());
-      data.fontsize = $(elem).css('font-size');
+      const data = {
+        inline: inline,
+        latex: encodeQuotes($(elem).html()),
+        fontsize: $(elem).css('font-size')
+      };
 
       const datatxt = JSON.stringify(data);
 
@@ -194,9 +198,9 @@ const setup = (editor: Editor, url: string) => {
     doc.html(evt.content);
     $(doc).find('.mee_iframe').each(function () {
       const src = $(this).attr('src');
-      let data = src.substr(src.indexOf('?'));
-      data = data.substr(1);
-      data = $.parseJSON(data);
+      let rawdata = src.substring(src.indexOf('?'));
+      rawdata = rawdata.substring(1);
+      const data = JSON.parse(rawdata);
       data.latex = unencodeQuotes(data.latex);
 
       $(this).removeClass('mee_iframe');
@@ -227,17 +231,23 @@ const setup = (editor: Editor, url: string) => {
   }
 
   function findMee(element) {
-    if ($(element).hasClass('mee_iframe'))
-      return element;
-    if (!element.parentNode)
+    if (!element) {
+      // The element is likely undefined.
       return null;
+    }
+    if ($(element).hasClass('mee_iframe')) {
+      return element;
+    }
+    if (!element.parentNode) {
+      return null;
+    }
     return findMee(element.parentNode);
   }
 
-  return get$1(editor);
+  return get$1();
 };
 
-const get$1 = function (editor) {
+const get$1 = function () {
   return {
     getCurrentMee: function () {
       return getCurrentMee();

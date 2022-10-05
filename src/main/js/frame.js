@@ -1,11 +1,13 @@
 $(function () {
   var no_auto_mee = 1;
   var data = window.location.search;
-  var data = unescape(data.substr(1));
-  var data = $.parseJSON(data);
+  var data = unescape(data.substring(1));
+  var data = JSON.parse(data);
   data.latex = unencodeQuotes(data.latex);
-  $('#equation').css('font-size', data.fontsize);
+  var equation = $('#equation');
+  equation.css('font-size', data.fontsize);
 
+  var tag;
   if (data.inline) {
     tag = $("<span>");
   } else {
@@ -15,11 +17,11 @@ $(function () {
   tag.addClass('mee');
   tag.addClass('meeInMCE');
   tag.html(data.latex);
-  $('#equation').append(tag);
+  equation.append(tag);
 
-  $('body').bind('mee/done',setupFrame);
+  $('body').on('mee/done',setupFrame);
 
-  $('#equation').click(function () {
+  equation.on('click', function () {
     window.parent.parent.tinymce.activeEditor.plugins['maths-equation-editor'].clickMEEiFrame(window);
   });
 
