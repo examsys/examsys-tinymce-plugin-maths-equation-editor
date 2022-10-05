@@ -35,6 +35,7 @@
     "tinymce": "^5.7.1",
     "ts-loader": "^7.0.1",
     "tslib": "^2.0.0",
+    "typescript": "^4.0.0",
     "webpack": "^4.25.1",
     "webpack-livereload-plugin": "^2.1.1"
   },
