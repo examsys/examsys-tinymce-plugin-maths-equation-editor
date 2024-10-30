@@ -9,17 +9,17 @@ $.Class.extend("MEE.Base",
 
         if (!source)
             source = document.body;
-        
+
         var d = new Date;
         var eqns = $.makeArray($(source).find("div.mee, span.mee, input.mee").css('color','white'));
         var d = new Date;
-        
-        async.each(eqns, this.Process, function () { 
-                        var d = new Date; 
-                        console.log('MEE DONE ' + d.getTime()); 
+
+        async.each(eqns, this.Process, function () {
+                        var d = new Date;
+                        console.log('MEE DONE ' + d.getTime());
                         $('body').trigger('mee/done',[]);
                     });
-        
+
         $(document.body).click(this.callback('pageClick'));
     },
 
@@ -33,25 +33,25 @@ $.Class.extend("MEE.Base",
         }
         return true;
     },
-    
+
     //#region Process elements
     Process: function (elem, callback) {
-        
+
         var proc = {
           elem : elem,
           type : 'display',
           inline : false
         };
-        
+
         if(elem.tagName === 'SPAN') {
             proc.inline = true;
         }
-        
+
         if(elem.tagName === 'INPUT') {
             delete proc.inline;
             proc.type = 'edit';
         }
-    
+
         if (proc.type == "display") {
             //if ($(proc.elem).attr('latex'))
                 //return;
@@ -62,7 +62,7 @@ $.Class.extend("MEE.Base",
             var meeeqn = new MEE.Edit(proc.elem);
             MEE.Base.edits.push(meeeqn);
         }
-        
+
         async.nextTick( function () {
             if (proc.eqn)
                 proc.eqn.Align();
@@ -71,17 +71,17 @@ $.Class.extend("MEE.Base",
 
             //add some hight and padding to the parent elments to help with layout.
             if(!$(proc.elem).hasClass('meeInMCE')) {
-              var h = MEE.Base.replacePX(proc.elem.style.height) 
+              var h = MEE.Base.replacePX(proc.elem.style.height)
                                                   + MEE.Base.replacePX(proc.elem.style.paddingTop)
                                                    + MEE.Base.replacePX(proc.elem.style.paddingBottom);
 
               var elem = proc.elem.parentNode;
               if(elem.tagName == 'SPAN') {
                 elem = elem.parentNode; // if we are in a table set the height on the tr not the td
-              } 
+              }
               if(elem.tagName == 'TD') {
                 elem = elem.parentNode; // if we are in a table set the height on the tr not the td
-              } 
+              }
 
               if(h == 0 && MEE.Base.replacePX(elem.style.height) == 0) {
                 elem.style.height = 'auto';
@@ -90,15 +90,15 @@ $.Class.extend("MEE.Base",
                 elem.style.paddingTop = proc.elem.style.paddingTop;
               }
             } else {
-               var w = MEE.Base.calcWidth(proc.elem,0);
+               var w = MEE.Base.calcWidth(proc.elem);
                proc.elem.parentNode.style.width = w + 'px';
-               var h = MEE.Base.calcHeight(proc.elem,0);
+               var h = MEE.Base.calcHeight(proc.elem);
                proc.elem.parentNode.style.height = h + 'px';
             }
             callback();
         });
     },
-            
+
     //#region Process elements
 
     ProcessNext_Fonts: function () {
@@ -120,9 +120,9 @@ $.Class.extend("MEE.Base",
         setTimeout("MEE.Base.ProcessNext_Align()", 5);
     },
 
-    //#endregion 
+    //#endregion
 
-    
+
     replacePX: function (val) {
       val = parseInt(val);
       if(!val || val == 'NaN') {
@@ -131,35 +131,37 @@ $.Class.extend("MEE.Base",
         return val;
       }
     },
-    calcWidth : function (e,w) {
-        //recursivly caculate width of an equasion
-       if(e.childNodes) {
-          for(var i = 0; i < e.childNodes.length; i++) {
-            if(e.childNodes[i].style) {
-              je=$(e.childNodes[i]);
-              if (je.width() > w)
-                  w += je.width();
-            }
-            w = this.calcWidth(e.childNodes[i],w);
-          }
-          return w;
-       }
-       return 0;
+    /**
+     * Calculate the width of the content of an element.
+     *
+     * @param {HTMLElement} e
+     * @returns {Number}
+     */
+    calcWidth : function (e) {
+        var originalWidth = e.style.width;
+        // We set the width to 0, in case it is already set to be higher than the amount of space
+        // the element's content takes up. If the element uses more space than needed the scrollWidth
+        // would return the elements current width.
+        e.style.width = '0px';
+        var width = e.scrollWidth;
+        e.width = originalWidth;
+        return width;
     },
-    calcHeight : function (e,h) {
-        //recursivly caculate height of an equasion
-       if(e.childNodes) {
-          for(var i = 0; i < e.childNodes.length; i++) {
-            if(e.childNodes[i].style) {
-              je=$(e.childNodes[i]);
-              //if (je.height() > h)
-                  h += je.height();
-            }
-            h = this.calcWidth(e.childNodes[i],h);
-          }
-          return h;
-       }
-       return 0;
+    /**
+     * Calculate the height the content of an element.
+     *
+     * @param {HTLMElement}) e
+     * @returns {Number}
+     */
+    calcHeight : function (e) {
+        var originalHeight = e.style.height;
+        // We set the height to 0, in case it is already set to be higher than the amount of space
+        // the element's content takes up. If the element uses more space than needed the scrollHeight
+        // would return the elements current height.
+        e.style.height = '0px';
+        var height = e.scrollHeight;
+        e.style.height = originalHeight;
+        return height;
     }
 },
 {

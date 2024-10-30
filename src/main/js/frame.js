@@ -27,9 +27,25 @@ $(function () {
 
 });
 
+/**
+ * This method is run by a page inside an iframe to size it to fit the content.
+ *
+ * This code is run everytime the iframe is loaded.
+ */
 function setupFrame() {
-  var eqn = $('#equation');
-  window.parent.parent.tinymce.activeEditor.plugins['maths-equation-editor'].updateMEE(window, eqn.width(), eqn.height());
+  var iframe = window.frameElement;
+  // Set the size of the frame to 0, so that we will only get the size of the content.
+  iframe.width = 0;
+  iframe.height = 0;
+  // We also need to ensure that the style on the iframe does not override the size.
+  iframe.style.width = '0px';
+  iframe.style.height = '0px';
+  // Set the frame to be the amount of space the content takes up.
+  iframe.style.width = '';
+  iframe.style.height = '';
+  iframe.style.verticalAlign = 'middle';
+  iframe.width = document.body.scrollWidth;
+  iframe.height = document.body.scrollHeight;
 }
 
 function unencodeQuotes(str) {
