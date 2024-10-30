@@ -27,16 +27,14 @@ if (PHP_SAPI != 'cli') {
     die("Please run this script from the CLI!\n");
 }
 
-require_once '../../../../../../include/load_config.php';
-
-cli_utils::prompt('Making Images');
+echo "Making Images\n";
 
 $toconvert = array();
 //$toconvert['&#x221A;'] = 'MathJax_Main-Regular';
 $toconvert['log'] = 'MathJax_Main-Regular';
 
 foreach ($toconvert as $char => $font) {
-    cli_utils::prompt('Converting ' . $char);
+    echo "\tConverting " . $char . " using ";
 
     $im = imagecreatetruecolor(1000, 1000);
     $white = imagecolorallocate($im, 255, 255, 255);
@@ -44,7 +42,7 @@ foreach ($toconvert as $char => $font) {
     $black = imagecolorallocate($im, 0, 0, 0);
     imagecolortransparent($im, $white);
     $font = 'fonts/' . $font . '.ttf';
-    cli_utils::prompt($font);
+    echo $font . "\n";
     imagettftext($im, 400, 0, 200, 700, $black, $font, $char);
     imagepng($im, $char . '.png');
 }

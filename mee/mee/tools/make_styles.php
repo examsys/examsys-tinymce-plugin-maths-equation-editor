@@ -27,9 +27,7 @@ if (PHP_SAPI != 'cli') {
     die("Please run this script from the CLI!\n");
 }
 
-require_once '../../../../../../include/load_config.php';
-
-cli_utils::prompt('Building combined css files');
+echo "Building combined css files\n";
 
 function compress($buffer)
 {
@@ -49,9 +47,9 @@ $files[] = 'fonts.css';
 $files[] = 'main.css';
 $files[] = 'toolbar.css';
 foreach ($files as $file) {
-    cli_utils::prompt('Compressing ' . $file);
+    echo "\tCompressing " . $file . "\n";
     $output .= compress(file_get_contents('../css/' . $file));
 }
 
 file_put_contents('../css/combined.css', $output);
-cli_utils::prompt('Saved as css/combined.css');
+echo "Saved as css/combined.css\n";
