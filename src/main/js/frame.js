@@ -41,11 +41,12 @@ function setupFrame() {
   iframe.style.width = '0px';
   iframe.style.height = '0px';
   // Set the frame to be the amount of space the content takes up.
+  iframe.width = document.body.scrollWidth;
+  iframe.height = document.body.scrollHeight;
+  // Ensure that the style is setup correctly.
   iframe.style.width = '';
   iframe.style.height = '';
   iframe.style.verticalAlign = 'middle';
-  iframe.width = document.body.scrollWidth;
-  iframe.height = document.body.scrollHeight;
 }
 
 function unencodeQuotes(str) {
