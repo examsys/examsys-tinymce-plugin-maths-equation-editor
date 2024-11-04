@@ -27,9 +27,7 @@ if (PHP_SAPI != 'cli') {
     die("Please run this script from the CLI!\n");
 }
 
-require_once '../../../../../../include/load_config.php';
-
-cli_utils::prompt('Building combined JS files');
+echo "Building combined JS files:\n";
 $debug = 0;
 
 $files = array();
@@ -79,9 +77,9 @@ $files[] = 'js/mee.maxima.js';
 require('include/jsmin.php');
 $js = "/*DO NOT MODIFY THIS FILE*/\n";
 foreach ($files as $file) {
-    cli_utils::prompt('Compressing ' .  $file);
+    echo "\tCompressing " .  $file . "\n";
     $js .= JSMin::minify(file_get_contents('../' . $file)) . "\n";
     //$js .= file_get_contents("../".$file) . "\n";
 }
 file_put_contents('../js/mee.js', $js);
-cli_utils::prompt('Saved as js/mee.js');
+echo "Saved as js/mee.js\n";

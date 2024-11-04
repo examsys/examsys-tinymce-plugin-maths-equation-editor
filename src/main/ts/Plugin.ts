@@ -25,13 +25,6 @@ const getFrameForDocument = function(document) {
   }
 }
 
-const updateMEE = function(frame, w, h) {
-  const iframe = $(getFrameForDocument(frame.document));
-  iframe.css('width', w + 5 + 'px');
-  iframe.css('height', h + 'px');
-  iframe.css('vertical-align', 'middle');
-}
-
 const clickMEEiFrame = function(frame) {
   if (frame.document)
     frame = getFrameForDocument(frame.document);
@@ -251,9 +244,6 @@ const get$1 = function () {
   return {
     getCurrentMee: function () {
       return getCurrentMee();
-    },
-    updateMEE: function (frame, w, h) {
-      return updateMEE(frame, w, h);
     },
     clickMEEiFrame: function (frame) {
       return clickMEEiFrame(frame);

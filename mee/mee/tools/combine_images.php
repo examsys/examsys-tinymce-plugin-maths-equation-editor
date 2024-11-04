@@ -27,10 +27,8 @@ if (PHP_SAPI != 'cli') {
     die("Please run this script from the CLI!\n");
 }
 
-require_once '../../../../../../include/load_config.php';
-
 ob_start();
-cli_utils::prompt('Combining Images');
+echo "Combining Images\n";
 
 $paths = array();
 $paths[] = 'tbicons';
@@ -130,10 +128,10 @@ foreach ($images as $img) {
 $output .= "'zzz': 'zzz' };\n";
 
 $target = '../images/combined.png';
-cli_utils::prompt('Saving as ' . $target);
+echo "\tSaving as " . $target . "\n";
 ob_flush();
 imagepng($resim, $target);
 
 $target = '../js/mee.images.js';
-cli_utils::prompt('Saving js data as ' . $target);
+echo "\tSaving js data as " . $target . "\n";
 file_put_contents($target, $output);
