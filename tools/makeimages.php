@@ -34,14 +34,14 @@ $toconvert = array();
 $toconvert['log'] = 'MathJax_Main-Regular';
 
 foreach ($toconvert as $char => $font) {
-    echo "\tConverting " . $char . " using ";
+    echo "\tConverting " . $char . ' using ';
 
     $im = imagecreatetruecolor(1000, 1000);
     $white = imagecolorallocate($im, 255, 255, 255);
     imagefilledrectangle($im, 0, 0, 1000, 1000, $white);
     $black = imagecolorallocate($im, 0, 0, 0);
     imagecolortransparent($im, $white);
-    $font = 'fonts/' . $font . '.ttf';
+    $font = '../mee/mee/tools/fonts/' . $font . '.ttf';
     echo $font . "\n";
     imagettftext($im, 400, 0, 200, 700, $black, $font, $char);
     imagepng($im, $char . '.png');
