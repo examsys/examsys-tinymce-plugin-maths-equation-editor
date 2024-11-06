@@ -48,8 +48,8 @@ $files[] = 'main.css';
 $files[] = 'toolbar.css';
 foreach ($files as $file) {
     echo "\tCompressing " . $file . "\n";
-    $output .= compress(file_get_contents('../css/' . $file));
+    $output .= compress(file_get_contents('../mee/mee/css/' . $file));
 }
 
-file_put_contents('../css/combined.css', $output);
+file_put_contents('../mee/mee/css/combined.css', $output);
 echo "Saved as css/combined.css\n";

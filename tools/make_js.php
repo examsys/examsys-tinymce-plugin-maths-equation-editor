@@ -78,8 +78,7 @@ require('include/jsmin.php');
 $js = "/*DO NOT MODIFY THIS FILE*/\n";
 foreach ($files as $file) {
     echo "\tCompressing " .  $file . "\n";
-    $js .= JSMin::minify(file_get_contents('../' . $file)) . "\n";
-    //$js .= file_get_contents("../".$file) . "\n";
+    $js .= JSMin::minify(file_get_contents('../mee/mee/' . $file)) . "\n";
 }
-file_put_contents('../js/mee.js', $js);
+file_put_contents('../mee/mee/js/mee.js', $js);
 echo "Saved as js/mee.js\n";

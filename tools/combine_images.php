@@ -56,10 +56,10 @@ $width = 800;
 $images = array();
 
 foreach ($paths as $path) {
-    $dh = opendir("../images/$path");
+    $dh = opendir(dirname(__DIR__) . "/mee/mee/images/$path");
 
     while (false !== ($file = readdir($dh))) {
-        $filename = "../images/$path/$file";
+        $filename = dirname(__DIR__) . "/mee/mee/images/$path/$file";
         $name = "$path/$file";
 
         if ($file == '.' || $file == '..') {
@@ -121,17 +121,16 @@ imagefilledrectangle($resim, 0, 0, $width, $totalheight, $transparent);
 $output = "MEE.Data.images = {\n";
 
 foreach ($images as $img) {
-    //imagealphablending( $img['im'], true );
     imagecopy($resim, $img['im'], $img['left'], $img['top'], 0, 0, $img['width'], $img['height']);
     $output .= "\t'{$img['name']}': { left: {$img['left']}, top: {$img['top']}, width: {$img['width']}, height: {$img['height']} },\n";
 }
 $output .= "'zzz': 'zzz' };\n";
 
-$target = '../images/combined.png';
+$target = '../mee/mee/images/combined.png';
 echo "\tSaving as " . $target . "\n";
 ob_flush();
 imagepng($resim, $target);
 
-$target = '../js/mee.images.js';
+$target = '../mee/mee/js/mee.images.js';
 echo "\tSaving js data as " . $target . "\n";
 file_put_contents($target, $output);
